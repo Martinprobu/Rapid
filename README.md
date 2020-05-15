@@ -15,12 +15,13 @@ com.xxx.yyy.dao.mapper.custom.OrderMapper
 com.xxx.yyy.commons.consts.TableColumns  <可忽略>
 
 依赖(也可忽略):
-com.xxx.yyy.commons.utils.MapUtils
 com.xxx.yyy.commons.models.dto.table.ChildrenColumn
 com.xxx.yyy.commons.models.dto.table.Column
 com.xxx.yyy.commons.models.dto.PageInfo<T>
 com.xxx.yyy.commons.models.dto.ResponseData
+com.xxx.yyy.commons.utils.MapUtils
 com.xxx.yyy.commons.enums.ReturnCode
+com.xxx.yyy.commons.consts.TableColumns
 以及PageHelper插件
 
 
