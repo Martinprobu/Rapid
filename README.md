@@ -1,13 +1,18 @@
 /**
  * <pre>
  * 生成精简的层代码，batis层以Map交互，铲掉pojo，保留少量dto
- *
+ * 目前仅支持MySql
  *
  * 基本配置:
- * packagePath = com.xxx.yyy
- * domainName = order
- * serverPath = http://127.0.0.1:8080/be
- * jdbcPath =
+ * PACKAGEPATH = "com.xx.yy";                       //基本的包名路径
+ * SERVERPATH = "http://127.0.0.1:8080/api";        //接口服务器路径, 填充api接口的文档
+ * JDBCPATH = "jdbc:mysql://127.0.0.1:3306/db_dev"; //jdbc
+ * JDBCUSERNAME = "root";                           //jdbc
+ * JDBCPSWORD = "123456";                           //jdbc
+ * JDBCCLASS = "com.mysql.jdbc.Driver";             //jdbc
+ * JDBCPORT = "3306";                               //jdbc
+ * AUTHOR = "Bill";                                 //作者
+ * VERSION = "1.0";                                 //版本
  *
  * 生成以下层:
  * com.xxx.yyy.web.controller.OrderController
@@ -30,25 +35,22 @@
  *
  * 依懒以下pom
  * <dependency>
- * 			<groupId>mysql</groupId>
- * 			<artifactId>mysql-connector-java</artifactId>
- * 			<version>5.1.18</version>
- * 		</dependency>
- * 	<dependency>
- * 			<groupId>commons-io</groupId>
- * 			<artifactId>commons-io</artifactId>
- * 			<version>1.4</version>
- * 		</dependency>
- * 	<dependency>
- * 			<groupId>org.codehaus.jackson</groupId>
- * 			<artifactId>jackson-core-asl</artifactId>
- * 			<version>1.9.2</version>
- * 		</dependency>
- * 	<dependency>
- * 			<groupId>org.codehaus.jackson</groupId>
- * 			<artifactId>jackson-mapper-asl</artifactId>
- * 			<version>1.9.2</version>
- * 		</dependency>
+ * 		<groupId>mysql</groupId>
+ * 		<artifactId>mysql-connector-java</artifactId>
+ * 		<version>5.1.18</version>
+ * </dependency>
+ * <dependency>
+ *      <groupId>org.springframework</groupId>
+ *      <artifactId>spring-jdbc</artifactId>
+ *      <version>5.1.5.RELEASE</version>
+ * </dependency>
+ *
+ *
+ * 下个版本TODO:
+ *  生成Vue前端代码
+ *  支持Oracle
+ *
+ *
  * </pre>
  *
  * @author Bill
