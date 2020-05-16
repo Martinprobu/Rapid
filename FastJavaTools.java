@@ -71,7 +71,7 @@ import java.util.*;
 public class FastJavaTools {
 
     //配置
-    public static final String PACKAGEPATH = "com.midea.dc";                 //基本的包名路径
+    public static final String PACKAGEPATH = "com.yy.xx";                 //基本的包名路径
     public static final String SERVERPATH = "http://127.0.0.1:8080/api";     //接口服务器路径, 填充api接口的文档
     public static final String JDBCPATH = "jdbc:mysql://47.106.221.251:3306/process_dev";     //jdbc
 //    public static final String JDBCPATH = "jdbc:mysql://10.18.69.231:3306/process_dev";       //jdbc
