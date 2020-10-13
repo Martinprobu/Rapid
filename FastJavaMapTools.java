@@ -61,6 +61,7 @@ import java.util.*;
  *  生成Vue前端代码
  *  支持Oracle
  *
+ * 生成结果日志在 "Output :"
  *
  * </pre>
  *
