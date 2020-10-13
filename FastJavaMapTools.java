@@ -1,4 +1,4 @@
-package tools;
+package com.zy.supplier.admin.tools;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -46,9 +46,9 @@ import java.util.*;
  *
  * 依懒以下pom
  * <dependency>
- * 		<groupId>mysql</groupId>
- * 		<artifactId>mysql-connector-java</artifactId>
- * 		<version>5.1.18</version>
+ *      <groupId>mysql</groupId>
+ *      <artifactId>mysql-connector-java</artifactId>
+ *      <version>5.1.18</version>
  * </dependency>
  * <dependency>
  *      <groupId>org.springframework</groupId>
@@ -61,7 +61,6 @@ import java.util.*;
  *  生成Vue前端代码
  *  支持Oracle
  *
- * 生成结果日志在 "Output :"
  *
  * </pre>
  *
@@ -72,14 +71,14 @@ import java.util.*;
 public class FastJavaMapTools {
 
     //配置
-    public static final String PACKAGEPATH = "com.yy.xx";                 //基本的包名路径
+    public static final String PACKAGEPATH = "com.midea.dc";                 //基本的包名路径
     public static final String SERVERPATH = "http://127.0.0.1:8080/api";     //接口服务器路径, 填充api接口的文档
     public static final String JDBCPATH = "jdbc:mysql://47.106.221.251:3306/process_dev";     //jdbc
-//    public static final String JDBCPATH = "jdbc:mysql://10.18.69.231:3306/process_dev";       //jdbc
+    //    public static final String JDBCPATH = "jdbc:mysql://10.18.69.231:3306/process_dev";       //jdbc
     public static final String JDBCUSERNAME = "root";                       //jdbc
-//    public static final String JDBCUSERNAME = "process_dev";                //jdbc
+    //    public static final String JDBCUSERNAME = "process_dev";                //jdbc
     public static final String JDBCPSWORD = "Miyin#root123";                //jdbc
-//    public static final String JDBCPSWORD = "Azxs1234##";                   //jdbc
+    //    public static final String JDBCPSWORD = "Azxs1234##";                   //jdbc
     public static final String JDBCCLASS = "com.mysql.jdbc.Driver";         //jdbc
     public static final String JDBCPORT = "3306";                           //jdbc
     public static final String AUTHOR = "Bill";                             //作者
@@ -94,14 +93,16 @@ public class FastJavaMapTools {
     public static final String MAPPER_SUFFIX = "Mapper.java";
     public static final String COLUMNS_PACKAGE = "/commons/consts/tables";
     public static final String COLUMNS_SUFFIX = "TableColumns.java";
+    public static final String HTTP_MOCK_PACKAGE = "/http_mock/";
+    public static final String HTTP_MOCK_SUFFIX = ".http";
 
 
     public static void main(String[] args) {
 
         System.out.println("FastJavaTools Start ======================================================== ");
         CodeGen code = new CodeGen(PACKAGEPATH, SERVERPATH,
-                                    JDBCPATH,
-                                    AUTHOR, VERSION);
+                JDBCPATH,
+                AUTHOR, VERSION);
 
         List<String> list = code.readTables();
         System.out.println("Please choose which table need to gen the code, number or table_name is allowable.");
@@ -197,6 +198,9 @@ public class FastJavaMapTools {
 
             System.out.println("FastJavaTools Generate TableColumns ======================================== ");
             genColumn(COLUMNS_PACKAGE, COLUMNS_SUFFIX);
+
+            System.out.println("FastJavaTools Generate HttpMock ======================================== ");
+            genHttpMock(HTTP_MOCK_PACKAGE, HTTP_MOCK_SUFFIX);
 
         }
 
@@ -740,6 +744,22 @@ public class FastJavaMapTools {
         }
 
         /**
+         * 生成Column http_mock
+         */
+        public void genHttpMock(String subPath, String suffix) {
+            StringBuilder sb = new StringBuilder();
+//            String myPackagePath = this.packagePath + subPath.replace("/", ".");
+            sb.append("POST " + this.serverPath + "/" + this.domainName + "/" + className + "\n");
+            sb.append("Accept: */*" + "\n");
+            sb.append("Cache-Control: no-cache" + "\n");
+            sb.append("Content-Type: application/json" + "\n");
+            sb.append("" + "\n");
+            sb.append("{}" + "\n");
+
+            genFile(sb.toString(), subPath, suffix);
+        }
+
+        /**
          * 生成文件io
          * @param conent 文件里的代码内容
          * @param subPath 各层对应的中间目录
@@ -1238,7 +1258,7 @@ public class FastJavaMapTools {
          * 列出表的字段描述
          */
         public List<TableDesc> descTable(String tableName) {
-            //id	int(11)	NO	PRI	NULL	auto_increment
+            //id    int(11) NO  PRI NULL    auto_increment
             List<Map<String, Object>> resultList = this.jdbcTemplate.queryForList("show full columns from `" + tableName + "`");
             Map<String, Object> map = new HashMap<String, Object>();
             TableDesc table;
@@ -1258,7 +1278,7 @@ public class FastJavaMapTools {
          */
         public String descTableComment(String databaseName, String tableName) {
             String sql = "SELECT table_comment FROM information_schema.tables " +
-                        " WHERE table_schema = '" + databaseName + "' AND table_name = " + "'" + tableName + "'";
+                    " WHERE table_schema = '" + databaseName + "' AND table_name = " + "'" + tableName + "'";
             String comment = this.jdbcTemplate.queryForObject(sql, String.class);
             return comment.replace("表", "");
 //            return String.valueOf(map.get("table_comment"));
