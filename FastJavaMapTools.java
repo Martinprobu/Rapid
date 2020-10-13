@@ -68,7 +68,7 @@ import java.util.*;
  * @since 2020-05-05
  * @version 1.0
  */
-public class FastJavaTools {
+public class FastJavaMapTools {
 
     //配置
     public static final String PACKAGEPATH = "com.yy.xx";                 //基本的包名路径
