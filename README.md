@@ -108,7 +108,7 @@
  *
  *
  *
- * ymal配置：
+ * 3.ymal配置：
  *  swagger:
  *  doc:
  *  visitPath: /swagger.json
