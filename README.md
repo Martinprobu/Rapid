@@ -107,6 +107,19 @@
  * }
  *
  *
+ *
+ * ymal配置：
+ *  swagger:
+ *  doc:
+ *  visitPath: /swagger.json
+ *  useWar: false
+ *  sourceDir: ${project.basedir}
+ *spring:
+ *mvc:
+ *  static-path-pattern: /static/**
+ *  resources:
+ *    static-locations: classpath:/META-INF/resources/, classpath:/resources/,classpath:/static/ 
+ *
  * </pre>
  *
  * @author Bill
