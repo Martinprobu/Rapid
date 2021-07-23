@@ -201,6 +201,9 @@ public class FastJavaMapTools {
 
             System.out.println("FastJavaTools Generate HttpMock ======================================== ");
             genHttpMock(HTTP_MOCK_PACKAGE, HTTP_MOCK_SUFFIX);
+            
+            System.out.println("FastJavaTools Generate Hive/Kudu ======================================== ");
+            genKuDuHiveSql(MAPPER_PACKAGE, COLUMNS_SUFFIX);
 
         }
 
@@ -574,6 +577,33 @@ public class FastJavaMapTools {
 
             genFile(sb.toString(), subPath, suffix);
 
+        }
+        
+        /**
+         * 生成kudu/Hive ddl
+         */
+        public void genKuDuHiveSql(String subPath, String suffix) {
+            StringBuilder sb = new StringBuilder();
+            String myPackagePath = this.packagePath + subPath.replace("/", ".");
+            sb.append("CREATE TABLE kudu.dev." + tableName + " (  \n");
+            sb.append("\n");
+            sb.append("id int WITH (primary_key = true), \n");
+            //迭代表字段
+            this.tableFileds.forEach(col -> {
+                if ("id".equals(col.getField())) {
+                    sb.append("id int WITH (primary_key = true), \n");
+                    return;
+                } else  {
+                    sb.append("\t\t" + col.getField() + "\t" + col.getType() + "\n");
+                    return;
+                }
+            });
+            sb.append(") WITH (\n");
+            sb.append("partition_by_hash_columns = ARRAY['id'],\n");
+            sb.append("partition_by_hash_buckets = 2 \n");
+            sb.append("); \n");
+
+            genFile(sb.toString(), subPath, suffix);
         }
 
         /**
