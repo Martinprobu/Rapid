@@ -16,7 +16,7 @@ import java.util.*;
  *
  * 基本配置:
  * PACKAGEPATH = "com.xx.yy";                       //基本的包名路径
- * SERVERPATH = "http://127.0.0.1:8080/api";        //接口服务器路径, 填充api接口的文档
+ * SERVERPATH = "http://127.0.0.1:8091/dc";        //接口服务器路径, 填充api接口的文档
  * JDBCPATH = "jdbc:mysql://127.0.0.1:3306/db_dev"; //jdbc
  * JDBCUSERNAME = "root";                           //jdbc
  * JDBCPSWORD = "123456";                           //jdbc
@@ -35,7 +35,7 @@ import java.util.*;
  * com.xxx.yyy.commons.models.dto.table.ChildrenColumn
  * com.xxx.yyy.commons.models.dto.table.Column
  * com.xxx.yyy.commons.models.dto.PageInfo<T>
- * com.xxx.yyy.commons.models.dto.ResponseData
+ * com.xxx.yyy.commons.models.dto.BaseResponse
  * com.xxx.yyy.commons.utils.MapUtils
  * com.xxx.yyy.commons.enums.ReturnCode
  * com.xxx.yyy.commons.consts.TableColumns
@@ -46,9 +46,9 @@ import java.util.*;
  *
  * 依懒以下pom
  * <dependency>
- *      <groupId>mysql</groupId>
- *      <artifactId>mysql-connector-java</artifactId>
- *      <version>5.1.18</version>
+ * 		<groupId>mysql</groupId>
+ * 		<artifactId>mysql-connector-java</artifactId>
+ * 		<version>5.1.18</version>
  * </dependency>
  * <dependency>
  *      <groupId>org.springframework</groupId>
@@ -65,19 +65,19 @@ import java.util.*;
  * </pre>
  *
  * @author Bill
- * @since 2020-05-05
  * @version 1.0
+ * @since 2020-05-05
  */
-public class FastJavaMapTools {
+public class FastJavaTools {
 
     //配置
-    public static final String PACKAGEPATH = "com.midea.dc";                 //基本的包名路径
-    public static final String SERVERPATH = "http://127.0.0.1:8080/api";     //接口服务器路径, 填充api接口的文档
-    public static final String JDBCPATH = "jdbc:mysql://47.106.221.251:3306/process_dev";     //jdbc
-    //    public static final String JDBCPATH = "jdbc:mysql://10.18.69.231:3306/process_dev";       //jdbc
-    public static final String JDBCUSERNAME = "root";                       //jdbc
+    public static final String PACKAGEPATH = "com.zy.supplier.admin";                 //基本的包名路径
+    public static final String SERVERPATH = "http://127.0.0.1:8091/dc";     //接口服务器路径, 填充api接口的文档
+    //    public static final String JDBCPATH = "jdbc:mysql://47.106.221.251:3306/process_dev";     //jdbc
+    public static final String JDBCPATH = "jdbc:mysql://10.18.51.187:3306/supplier_center";       //jdbc
+    public static final String JDBCUSERNAME = "supplier_dev";                       //jdbc
     //    public static final String JDBCUSERNAME = "process_dev";                //jdbc
-    public static final String JDBCPSWORD = "Miyin#root123";                //jdbc
+    public static final String JDBCPSWORD = "Midea12#$";                //jdbc
     //    public static final String JDBCPSWORD = "Azxs1234##";                   //jdbc
     public static final String JDBCCLASS = "com.mysql.jdbc.Driver";         //jdbc
     public static final String JDBCPORT = "3306";                           //jdbc
@@ -89,12 +89,17 @@ public class FastJavaMapTools {
     public static final String CONTROLLER_SUFFIX = "Controller.java";       //controller层类后缀, //以下均是相同作用
     public static final String SERVICE_PACKAGE = "/service/impl";
     public static final String SERVICE_SUFFIX = "ServiceImpl.java";
-    public static final String MAPPER_PACKAGE = "/dao/mapper/custom";
+    public static final String MAPPER_PACKAGE = "/dao/mapper";
     public static final String MAPPER_SUFFIX = "Mapper.java";
-    public static final String COLUMNS_PACKAGE = "/commons/consts/tables";
+    public static final String COLUMNS_PACKAGE = "/model/tables";
     public static final String COLUMNS_SUFFIX = "TableColumns.java";
     public static final String HTTP_MOCK_PACKAGE = "/http_mock/";
     public static final String HTTP_MOCK_SUFFIX = ".http";
+    public static final String KUDU_PACKAGE = "/kudu";
+    public static final String KUDU_SUFFIX = ".kudu";
+    public static final String VUE_PACKAGE = "/vue";
+    public static final String VUE_LIST_SUFFIX = "List.vue";
+    public static final String VUE_DETAIL_SUFFIX = "Page.vue";
 
 
     public static void main(String[] args) {
@@ -105,32 +110,37 @@ public class FastJavaMapTools {
                 AUTHOR, VERSION);
 
         List<String> list = code.readTables();
+        list.clear();
+        list.add("sup_bank_import_log_detail");
         System.out.println("Please choose which table need to gen the code, number or table_name is allowable.");
-        for(int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             System.out.println("Table_id: " + i + "\tTable_name: " + list.get(i));
         }
-        Scanner input = new Scanner(System.in);
-
-        while(true) {
-            System.out.println("Please Enter the talbe name or table id, type \"ALL\" will gen all the tables above.");
-            String command = input.nextLine();
-
-            if("all".equals(command.toLowerCase())) {
-                for(int i = 0; i < list.size(); i++) {
-                    code.readTable(list.get(i));
-                }
-                break;
-            } else {
-                try {
-                    code.readTable(command);    //只支持输入表名
-                    break;
-                } catch (Exception e) {
-//                    code.readTable(command);
-                    e.printStackTrace();
-                    break;
-                }
-            }
+        for (int i = 0; i < list.size(); i++) {
+            code.readTable(list.get(i));
         }
+//        Scanner input = new Scanner(System.in);
+//
+//        while(true) {
+//            System.out.println("Please Enter the talbe name or table id, type \"ALL\" will gen all the tables above.");
+//            String command = input.nextLine();
+//
+//            if("all".equals(command.toLowerCase())) {
+//                for(int i = 0; i < list.size(); i++) {
+//                    code.readTable(list.get(i));
+//                }
+//                break;
+//            } else {
+//                try {
+//                    code.readTable(command);    //只支持输入表名
+//                    break;
+//                } catch (Exception e) {
+////                    code.readTable(command);
+//                    e.printStackTrace();
+//                    break;
+//                }
+//            }
+//        }
 
         System.out.println("FastJavaTools End =========================================================== ");
 
@@ -162,7 +172,9 @@ public class FastJavaMapTools {
         /**
          * 构造传参
          */
-        public CodeGen() { }
+        public CodeGen() {
+        }
+
         public CodeGen(String packagePath, String serverPath,
                        String jdbcPath,
                        String author, String version) {
@@ -201,9 +213,17 @@ public class FastJavaMapTools {
 
             System.out.println("FastJavaTools Generate HttpMock ======================================== ");
             genHttpMock(HTTP_MOCK_PACKAGE, HTTP_MOCK_SUFFIX);
-            
+
             System.out.println("FastJavaTools Generate Hive/Kudu ======================================== ");
-            genKuDuHiveSql(MAPPER_PACKAGE, COLUMNS_SUFFIX);
+            genKuDuHiveSql(KUDU_PACKAGE, KUDU_SUFFIX);
+
+
+            System.out.println("FastJavaTools Generate Vue ======================================== ");
+            System.out.println("FastJavaTools Generate Vue List ======================================== ");
+            genVueList(VUE_LIST_SUFFIX, VUE_LIST_SUFFIX);
+            System.out.println("FastJavaTools Generate Vue Detail/Modify ======================================== ");
+            genVueDetail(VUE_LIST_SUFFIX, VUE_DETAIL_SUFFIX);
+
 
         }
 
@@ -219,21 +239,21 @@ public class FastJavaMapTools {
             sb.append("\n");
             sb.append("import org.springframework.web.bind.annotation.*;");
             sb.append("\n");
-            sb.append("import io.swagger.annotations.Api;");
-            sb.append("\n");
-            sb.append("import io.swagger.annotations.ApiOperation;");
-            sb.append("\n");
+//            sb.append("import io.swagger.annotations.Api;");
+//            sb.append("\n");
+//            sb.append("import io.swagger.annotations.ApiOperation;");
+//            sb.append("\n");
             sb.append("import javax.annotation.Resource;");
             sb.append("\n");
             sb.append("import java.util.List;");
             sb.append("\n");
             sb.append("import java.util.Map;");
             sb.append("\n");
-            sb.append("import " + this.packagePath + ".commons.enums.ReturnCode;");
+            sb.append("import com.zy.supplier.common.enums.ReturnCode;");
             sb.append("\n");
-            sb.append("import " + this.packagePath + ".commons.models.dto.ResponseData;");
+            sb.append("import com.zy.supplier.common.dto.api.response.BaseResponse;");
             sb.append("\n");
-            sb.append("import " + this.packagePath + ".commons.utils.MapUtils;");
+            sb.append("import com.zy.supplier.common.utils.MapUtil;");
             sb.append("\n");
             sb.append("import " + this.packagePath + ".service.impl." + this.className + "ServiceImpl;");
             sb.append("\n");
@@ -256,7 +276,7 @@ public class FastJavaMapTools {
             sb.append("\n");
             sb.append("\n");
 
-            sb.append("@Api(tags = \"" + this.tableComment + "\")\n");
+//            sb.append("@Api(tags = \"" + this.tableComment + "\")\n");
             sb.append("@RestController\n");
             sb.append("@RequestMapping(\"/" + domainName + "\")");
             sb.append("\n");
@@ -282,7 +302,7 @@ public class FastJavaMapTools {
             sb.append("\t*\n");
             sb.append("\t*     objDemo : {");
             StringBuilder sb2 = new StringBuilder();
-            this.tableFileds.forEach( col -> {
+            this.tableFileds.forEach(col -> {
                 sb2.append(",\"" + col.getField() + "\":\"\"");
             });
             sb.append(sb2.toString().substring(1));
@@ -293,7 +313,7 @@ public class FastJavaMapTools {
             sb.append("\t*      total, pages,\n");
             sb.append("\t*      [{\n");
             //迭代表字段
-            this.tableFileds.forEach( col -> {
+            this.tableFileds.forEach(col -> {
                 sb.append("\t*         \"" + col.getField() + "\": \"\",  //" + col.getExtra() + "\n");
             });
             sb.append("\t*     }, .. ]\n");
@@ -302,10 +322,10 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             //list方法-代码
             sb.append("\t@GetMapping(\"/list\")\n");
-            sb.append("\t@ApiOperation(value = \"根据页面条件分页列表\")\n");
-            sb.append("\tpublic ResponseData findListCustom(@RequestParam(required = false, defaultValue = \"{}\") String data) {\n");
-            sb.append("\t\tMap map = MapUtils.parseQueryString2Map(data);\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName + "Service.findByPageCustom(map));\n");
+//            sb.append("\t@ApiOperation(value = \"根据页面条件分页列表\")\n");
+            sb.append("\tpublic BaseResponse findListCustom(@RequestParam(required = false, defaultValue = \"{}\") String data) {\n");
+            sb.append("\t\tMap map = MapUtil.parseQueryString2Map(data);\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.findByPageCustom(map));\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -314,12 +334,12 @@ public class FastJavaMapTools {
             sb.append("\t* <pre>\n");
             sb.append("\t*     查看单个对象\n");
             sb.append("\t*\n");
-            sb.append("\t*     demo: " + this.serverPath + "/" + this.domainName + "/get\n");
+            sb.append("\t*     demo: " + this.serverPath + "/" + this.domainName + "/detail\n");
             sb.append("\t*\n");
             sb.append("\t*     request: id=123\n");
             sb.append("\t*\n");
             sb.append("\t*     objDemo : {");
-            this.tableFileds.forEach( col -> {
+            this.tableFileds.forEach(col -> {
                 sb2.append(",\"" + col.getField() + "\":\"\"");
             });
             sb.append(sb2.toString().substring(1));
@@ -328,7 +348,7 @@ public class FastJavaMapTools {
             sb.append("\t*     response:\n");
             sb.append("\t*     {\n");
             //迭代表字段
-            this.tableFileds.forEach( col -> {
+            this.tableFileds.forEach(col -> {
                 sb.append("\t*         \"" + col.getField() + "\": \"\",  //" + col.getExtra() + "\n");
             });
             sb.append("\t*     }\n");
@@ -336,10 +356,10 @@ public class FastJavaMapTools {
             sb.append("\t* </pre>\n");
             sb.append("\t*/\n");
             //get方法-代码
-            sb.append("\t@GetMapping(\"/get\")\n");
-            sb.append("\t@ApiOperation(value = \"查看单个对象\")\n");
-            sb.append("\tpublic ResponseData findById(String id) {\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName +  "Service.findById(id));\n");
+            sb.append("\t@GetMapping(\"/detail\")\n");
+//            sb.append("\t@ApiOperation(value = \"查看单个对象\")\n");
+            sb.append("\tpublic BaseResponse findById(String id) {\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.findById(id));\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -351,7 +371,7 @@ public class FastJavaMapTools {
             sb.append("\t*     demo: " + this.serverPath + "/" + this.domainName + "/save\n");
             sb.append("\t*\n");
             sb.append("\t*     objDemo : {");
-            this.tableFileds.forEach( col -> {
+            this.tableFileds.forEach(col -> {
                 sb2.append(",\"" + col.getField() + "\":\"\"");
             });
             sb.append(sb2.toString().substring(1));
@@ -361,7 +381,7 @@ public class FastJavaMapTools {
             sb.append("\t*     request:\n");
             sb.append("\t*     {\n");
             //迭代表字段
-            this.tableFileds.forEach( aa -> {
+            this.tableFileds.forEach(aa -> {
                 sb.append("\t*         \"" + aa.getField() + "\": \"\",  //" + aa.getExtra() + "\n");
             });
             sb.append("\t*     }\n");
@@ -373,10 +393,10 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             //添加单个对象方法-代码
             sb.append("\t@PostMapping(\"/save\")\n");
-            sb.append("\t@ApiOperation(value = \"添加单个对象\")\n");
-            sb.append("\tpublic ResponseData save(@RequestParam String data) {\n");
-            sb.append("\t\tMap map = MapUtils.parseQueryString2Map(data);\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName + "Service.save(map));\n");
+//            sb.append("\t@ApiOperation(value = \"添加单个对象\")\n");
+            sb.append("\tpublic BaseResponse save(@RequestParam String data) {\n");
+            sb.append("\t\tMap map = MapUtil.parseQueryString2Map(data);\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.save(map));\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -391,10 +411,10 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             //更改对象的某字段-代码
             sb.append("\t@PostMapping(\"/update\")\n");
-            sb.append("\t@ApiOperation(value = \"更改对象的某字段\")\n");
-            sb.append("\tpublic ResponseData update(@RequestParam String data) {\n");
-            sb.append("\t\tMap map = MapUtils.parseQueryString2Map(data);\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName + "Service.update(map));\n");
+//            sb.append("\t@ApiOperation(value = \"更改对象的某字段\")\n");
+            sb.append("\tpublic BaseResponse update(@RequestParam String data) {\n");
+            sb.append("\t\tMap map = MapUtil.parseQueryString2Map(data);\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.update(map));\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -409,10 +429,10 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             //更改整个对象-代码
             sb.append("\t@PostMapping(\"/updateAll\")\n");
-            sb.append("\t@ApiOperation(value = \"更改整个对象\")\n");
-            sb.append("\tpublic ResponseData updateAll(@RequestParam String data) {\n");
-            sb.append("\t\tMap map = MapUtils.parseQueryString2Map(data);\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName + "Service.updateAll(map));\n");
+//            sb.append("\t@ApiOperation(value = \"更改整个对象\")\n");
+            sb.append("\tpublic BaseResponse updateAll(@RequestParam String data) {\n");
+            sb.append("\t\tMap map = MapUtil.parseQueryString2Map(data);\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.updateAll(map));\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -427,10 +447,10 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             //更改单个对象状态-代码
             sb.append("\t@PostMapping(\"/updateStatus\")\n");
-            sb.append("\t@ApiOperation(value = \"更改单个对象状态\")\n");
-            sb.append("\tpublic ResponseData updateStatus(@RequestParam String data) {\n");
-            sb.append("\t\tMap map = MapUtils.parseQueryString2Map(data);\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName + "Service.updateStatus(map));\n");
+//            sb.append("\t@ApiOperation(value = \"更改单个对象状态\")\n");
+            sb.append("\tpublic BaseResponse updateStatus(@RequestParam String data) {\n");
+            sb.append("\t\tMap map = MapUtil.parseQueryString2Map(data);\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.updateStatus(map));\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -445,10 +465,10 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             //删除单个对象-代码
             sb.append("\t@PostMapping(\"/del\")\n");
-            sb.append("\t@ApiOperation(value = \"删除单个对象\")\n");
-            sb.append("\tpublic ResponseData delById(@RequestParam String data) {\n");
-            sb.append("\t\tMap map = MapUtils.parseQueryString2Map(data);\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName + "Service.del(map));\n");
+//            sb.append("\t@ApiOperation(value = \"删除单个对象\")\n");
+            sb.append("\tpublic BaseResponse delById(@RequestParam String data) {\n");
+            sb.append("\t\tMap map = MapUtil.parseQueryString2Map(data);\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.del(map));\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -463,10 +483,10 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             //批量添加对象-代码
             sb.append("\t@PostMapping(\"/saveBatch\")\n");
-            sb.append("\t@ApiOperation(value = \"批量添加对象\")\n");
-            sb.append("\tpublic ResponseData saveBatch(@RequestParam String data) {\n");
-            sb.append("\t\tList<Map<String, String>> list = MapUtils.parseQueryString2List(data);\n");
-            sb.append("\t\treturn ResponseData.build(ReturnCode.SUCCESS, " + objectName + "Service.saveBatch(map));\n");
+//            sb.append("\t@ApiOperation(value = \"批量添加对象\")\n");
+            sb.append("\tpublic BaseResponse saveBatch(@RequestParam String data) {\n");
+            sb.append("\t\tList<Map<String, String>> list = MapUtil.parseQueryString2List(data);\n");
+            sb.append("\t\treturn BaseResponse.build(ReturnCode.SUCCESS, " + objectName + "Service.saveBatch(list));\n");
             sb.append("\t}\n");
             sb.append("\n");
             sb.append("}");
@@ -486,10 +506,10 @@ public class FastJavaMapTools {
             sb.append("\n");
             sb.append("import com.github.pagehelper.PageHelper;\n");
             sb.append("import com.github.pagehelper.PageInfo;\n");
-            sb.append("import " + this.packagePath + ".commons.consts.TableColumns;\n");
-            sb.append("import " + this.packagePath + ".commons.models.dto.table.Column;\n");
-            sb.append("import " + this.packagePath + ".commons.utils.MapUtils;\n");
-            sb.append("import " + this.packagePath + ".dao.mapper.customer." + this.className + "Mapper;\n");
+            sb.append("import com.zy.supplier.admin.model.tables." + this.className + "TableColumns;\n");
+            sb.append("import com.zy.supplier.common.dto.table.Column;\n");
+            sb.append("import com.zy.supplier.common.utils.MapUtil;\n");
+            sb.append("import com.zy.supplier.admin.dao.mapper." + this.className + "Mapper;\n");
             sb.append("import org.springframework.stereotype.Service;\n");
             sb.append("import javax.annotation.Resource;\n");
             sb.append("import java.util.List;\n");
@@ -513,12 +533,12 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             sb.append("\tpublic com.github.pagehelper.PageInfo<Map> findByPageCustom(Map map) {\n");
             sb.append("\t\n");
-            sb.append("\t\tPageHelper.startPage(MapUtils.getPageInex(map), MapUtils.getPageSize(map));\n");
+            sb.append("\t\tPageHelper.startPage(MapUtil.getPageInex(map), MapUtil.getPageSize(map));\n");
             sb.append("\t\tList<Map> list = " + this.objectName + "Mapper.findCustom(map);\n");
             sb.append("\t\n");
-            sb.append("\t\tList<Column> columnList = TableColumns." + this.tableName.toUpperCase() + "_TABLE;\n");
+            sb.append("\t\tList<Column> columnList = " + this.objectName + "TableColumns." + this.tableName.toUpperCase() + "_TABLE;\n");
             sb.append("\t\n");
-            sb.append("\t\treturn " + this.packagePath + ".commons.models.dto.PageInfo.build(new PageInfo(list), columnList);\n");
+            sb.append("\t\treturn com.zy.supplier.common.dto.PageInfo.build(new PageInfo(list), columnList);\n");
             sb.append("\t}\n");
             sb.append("\n");
 
@@ -578,33 +598,6 @@ public class FastJavaMapTools {
             genFile(sb.toString(), subPath, suffix);
 
         }
-        
-        /**
-         * 生成kudu/Hive ddl
-         */
-        public void genKuDuHiveSql(String subPath, String suffix) {
-            StringBuilder sb = new StringBuilder();
-            String myPackagePath = this.packagePath + subPath.replace("/", ".");
-            sb.append("CREATE TABLE kudu.dev." + tableName + " (  \n");
-            sb.append("\n");
-            sb.append("id int WITH (primary_key = true), \n");
-            //迭代表字段
-            this.tableFileds.forEach(col -> {
-                if ("id".equals(col.getField())) {
-                    sb.append("id int WITH (primary_key = true), \n");
-                    return;
-                } else  {
-                    sb.append("\t\t" + col.getField() + "\t" + col.getType() + "\n");
-                    return;
-                }
-            });
-            sb.append(") WITH (\n");
-            sb.append("partition_by_hash_columns = ARRAY['id'],\n");
-            sb.append("partition_by_hash_buckets = 2 \n");
-            sb.append("); \n");
-
-            genFile(sb.toString(), subPath, suffix);
-        }
 
         /**
          * 生成Mapper 代码
@@ -632,7 +625,7 @@ public class FastJavaMapTools {
             sb.append("\t\t\"select * from " + this.tableName + "\",\n");
             sb.append("\t\t\"where status != -1\",\n");
             //迭代数据字段
-            this.tableFileds.forEach( aa -> {
+            this.tableFileds.forEach(aa -> {
                 sb.append("\t\t\"<when test='map." + aa.getField() + " != null'>\",\n");
                 sb.append("\t\t\"and " + aa.getField() + " = #{map." + aa.getField() + "}\",\n");
                 sb.append("\t\t\"</when>\",\n");
@@ -666,7 +659,7 @@ public class FastJavaMapTools {
             finalSbInsert.setLength(0);
 
             sb.append(" ) values (");
-            this.tableFileds.forEach( aa -> {
+            this.tableFileds.forEach(aa -> {
                 if ("id".equals(aa.getField())
                         || "update_time".equals(aa.getField())) {  //插入时忽略id, 一般是自增
                     return;
@@ -681,7 +674,7 @@ public class FastJavaMapTools {
             sb.append("\t\n");
             sb.append("\t@Update({\"<script>\",\n");
             sb.append("\t\"update " + this.tableName + " set\",\n");
-            this.tableFileds.forEach( aa -> {
+            this.tableFileds.forEach(aa -> {
                 if ("id".equals(aa.getField())
                         || "update_time".equals(aa.getField())) {  //插入时忽略id, 一般是自增
                     return;
@@ -696,7 +689,7 @@ public class FastJavaMapTools {
             sb.append("\tint update(@Param(\"map\") Map map);\n");
             sb.append("\t\n");
             sb.append("\t@Update(\"update " + this.tableName + " set ");
-            this.tableFileds.forEach( aa -> {
+            this.tableFileds.forEach(aa -> {
                 if ("id".equals(aa.getField())
                         || "update_time".equals(aa.getField())) {  //插入时忽略id, 一般是自增
                     return;
@@ -720,6 +713,157 @@ public class FastJavaMapTools {
         }
 
         /**
+         * 生成kudu/Hive ddl
+         */
+        public void genKuDuHiveSql(String subPath, String suffix) {
+            StringBuilder sb = new StringBuilder();
+            String myPackagePath = this.packagePath + subPath.replace("/", ".");
+            sb.append("CREATE TABLE kudu.dev." + tableName + " (  \n");
+            sb.append("\n");
+            sb.append("id int WITH (primary_key = true), \n");
+            //迭代表字段
+            this.tableFileds.forEach(col -> {
+                if ("id".equals(col.getField())) {
+                    sb.append("id int WITH (primary_key = true), \n");
+                    return;
+                } else {
+                    sb.append("\t\t" + col.getField() + "\t" + col.getType() + "\n");
+                    return;
+                }
+            });
+            sb.append(") WITH (\n");
+            sb.append("partition_by_hash_columns = ARRAY['id'],\n");
+            sb.append("partition_by_hash_buckets = 2 \n");
+            sb.append("); \n");
+
+            genFile(sb.toString(), subPath, suffix);
+        }
+        /**
+         * 生成Vue List
+         */
+        public void genVueList(String subPath, String suffix) {
+            StringBuilder sb = new StringBuilder();
+            String myPackagePath = this.packagePath + subPath.replace("/", ".");
+            sb.append("<template> \n");
+            sb.append("\t<div class=\"UpdateDownLog_index contentPart\">\n");
+            sb.append("\n");
+            sb.append("\t\t<div class=\"datagrid\">\n");
+            sb.append("\t\t\t<a-table\n");
+            sb.append("\t\t\t\t:columns=\"columns\"\n");
+            sb.append("\t\t\t\t:dataSource=\"" + tableName + "List\"\n");
+            sb.append("\t\t\t\t:loading=\"tableLoading\"\n");
+            sb.append("\t\t\t\t:pagination=\"pagination\"\n");
+            sb.append("\t\t\t\t:scroll=\"{ x: scrollX }\"\n");
+            sb.append("\t\t\t\tsize=\"middle\"\n");
+            sb.append("\t\t\t\trowKey=\"seq\"\n");
+            sb.append("\t\t\t\tbordered\n");
+            sb.append("\t\t\t\t@change=\"serachList\"\n");
+            sb.append("\t\t\t>\n");
+            sb.append("\t\t\t</div>\n");
+            sb.append("\t</div>\n");
+            sb.append("\t</template>\n");
+            sb.append("\t\n");
+            sb.append("\t<script>\n");
+            sb.append("\timport viewModal from \"../component/viewModal\";\n");
+            sb.append("\timport moment from \"moment\";\n");
+            sb.append("\texport default {\n");
+            sb.append("\t\tname: \"" + tableName + "\",\n");
+            sb.append("\t\tcomponents: {\n");
+            sb.append("\t\t\tviewModal,\n");
+            sb.append("\t\t},\n");
+            sb.append("\t\n");
+            sb.append("\t\tdata() {\n");
+            sb.append("\t\t\treturn {\n");
+            sb.append("\t\t\t\t" + tableName + "List: [],\n");
+            sb.append("\t\t\t\tcolumns: [\n");
+
+            //迭代表字段
+            this.tableFileds.forEach(col -> {
+                sb.append("\t\t\t\t\t{\n");
+                sb.append("\t\t\t\t\t\ttitle: \"" + col.getExtra() + "\",\n");
+                sb.append("\t\t\t\t\t\tdataIndex: \""+ col.getField() + "\",\n");
+                sb.append("\t\t\t\t\t\twidth: 60,\n");
+                sb.append("\t\t\t\t\t\talign: \"center\",\n");
+            });
+            sb.append("\t\t\t\t\t],\n");
+            sb.append("\t\t\t\t\ttableLoading: false,\n");
+            sb.append("\t\t\t\t\tsearchLoading: false,\n");
+            sb.append("\t\t\t\t\tpagination: {\n");
+            sb.append("\t\t\t\t\t\tcurrent: 1,\n");
+            sb.append("\t\t\t\t\t\tpageSize: 10,\n");
+            sb.append("\t\t\t\t\t\ttotal: 0,\n");
+            sb.append("\t\t\t\t\t},\n");
+            sb.append("\t\t\t\t\tshowMessageData: false,\n");
+            sb.append("\t\t\t\t\tmessageTitle: \"\",\n");
+            sb.append("\t\t\t\t\tmessageData: \"\",\n");
+            sb.append("\t\t\t\t};\n");
+            sb.append("\t\t\t},\n");
+            sb.append("\t\t\tmethods: {\n");
+            sb.append("\t\t\t\tserachList(pagination) {\n");
+            sb.append("\t\t\t\t\tif (this.tableLoading) return;\n");
+            sb.append("\t\t\t\t\tthis.tableLoading = true;\n");
+            sb.append("\t\t\t\t\tif (pagination && pagination.current)\n");
+            sb.append("\t\t\t\t\t\tthis.pagination.current = pagination.current;\n");
+            sb.append("\t\t\t\t\thttp\n");
+            sb.append("\t\t\t\t\t\t.get(\"/" + tableName + "/list\", {\n");
+            sb.append("\t\t\t\t\t\t\tpageNum: this.pagination.current,\n");
+            sb.append("\t\t\t\t\t\t\tpageSize: this.pagination.pageSize,\n");
+            sb.append("\t\t\t\t\t\t\tstart_time: moment(this.searchValue.start_time).format(\n");
+            sb.append("\t\t\t\t\t\t\t\t\"YYYY-MM-DD 00:00:00\"\n");
+            sb.append("\t\t\t\t\t\t\t),\n");
+            sb.append("\t\t\t\t\t\t\t\tend_time: moment(this.searchValue.end_time).format(\n");
+            sb.append("\t\t\t\t\t\t\t\"YYYY-MM-DD 23:59:59\"\n");
+            sb.append("\t\t\t\t\t\t),\n");
+            sb.append("\t\t\t\t\t\tstatus: this.searchValue.status,\n");
+            sb.append("\t\t\t\t\t})\n");
+            sb.append("\t\t\t\t\t.then(\n");
+            sb.append("\t\t\t\t\t\t(res) => {\n");
+            sb.append("\t\t\t\t\t\t\tres = res || {};\n");
+            sb.append("\t\t\t\t\t\t\tif (res.code === AppUtil.SUCCESS_CODE) {\n");
+            sb.append("\t\t\t\t\t\t\t\tlet { content: data } = res || {};\n");
+            sb.append("\t\t\t\t\t\t\t\tlet { list, pageNum, total } = data || {};\n");
+            sb.append("\t\t\t\t\t\t\t\tlist = list.map((item, index) => {\n");
+            sb.append("\t\t\t\t\t\t\t\t\treturn {\n");
+            sb.append("\t\t\t\t\t\t\t\t\t\t...item,\n");
+            sb.append("\t\t\t\t\t\t\t\t\t\tseq: index,\n");
+            sb.append("\t\t\t\t\t\t\t\t\t};\n");
+            sb.append("\t\t\t\t\t\t\t\t});\n");
+            sb.append("\t\t\t\t\t\t\t\tthis." + tableName + "List = list || [];\n");
+            sb.append("\t\t\t\t\t\t\t\tthis.pagination = {\n");
+            sb.append("\t\t\t\t\t\t\t\t\t...this.pagination,\n");
+            sb.append("\t\t\t\t\t\t\t\t\tcurrent: pageNum || 1,\n");
+            sb.append("\t\t\t\t\t\t\t\t\ttotal: total || 0,\n");
+            sb.append("\t\t\t\t\t\t\t\t};\n");
+            sb.append("\t\t\t\t\t\t\t} else {\n");
+            sb.append("\t\t\t\t\t\t\t\tthis.$message.error(res.detail);\n");
+            sb.append("\t\t\t\t\t\t\t}\n");
+            sb.append("\t\t\t\t\t\t\tthis.tableLoading = false;\n");
+            sb.append("\t\t\t\t\t\t\tthis.searchLoading = false;\n");
+            sb.append("\t\t\t\t\t\t}\n");
+            sb.append("\t\t\t\t\t)\n");
+            sb.append("\t\t\t\t\t.catch((err) => {\n");
+            sb.append("\t\t\t\t\t\tconsole.error(err);\n");
+            sb.append("\t\t\t\t\t\tthis.tableLoading = false;\n");
+            sb.append("\t\t\t\t\t\tthis.searchLoading = false;\n");
+            sb.append("\t\t\t\t\t});\n");
+            sb.append("\t\t\t}\n");
+            sb.append("\t\t},\n");
+            sb.append("\t};\n");
+            sb.append("</script>\n");
+            sb.append("\n");
+
+
+            genFile(sb.toString(), subPath, suffix);
+
+        }
+        /**
+         * 生成Vue Detail/Modify
+         */
+        public void genVueDetail(String subPath, String suffix) {
+
+        }
+
+        /**
          * 生成Column 代码
          */
         public void genColumn(String subPath, String suffix) {
@@ -728,8 +872,8 @@ public class FastJavaMapTools {
             sb.append("package " + myPackagePath + ";\n");
             sb.append("\n");
             sb.append("import com.google.common.collect.Lists;\n");
-            sb.append("import " + this.packagePath + ".commons.models.dto.table.ChildrenColumn;\n");
-            sb.append("import " + this.packagePath + ".commons.models.dto.table.Column;\n");
+//            sb.append("import " + this.packagePath + ".commons.models.dto.table.ChildrenColumn;\n");
+            sb.append("import com.zy.supplier.common.dto.table.Column;\n");
             sb.append("import java.util.List;\n");
             sb.append("\n");
             sb.append("/**\n");
@@ -745,7 +889,7 @@ public class FastJavaMapTools {
             sb.append("\t*\n");
             sb.append("\t*      {\n");
             //迭代表字段
-            this.tableFileds.forEach( col -> {
+            this.tableFileds.forEach(col -> {
                 sb.append("\t*         \"" + col.getField() + "\": \"" + "" + "\",\n");
             });
             sb.append("\t*     }\n");
@@ -753,7 +897,7 @@ public class FastJavaMapTools {
             sb.append("\t*/\n");
             sb.append("\tpublic static final List<Column> " + this.tableName.toUpperCase() + "_TABLE = Lists.newArrayList(\n");
             //迭代表字段
-            this.tableFileds.forEach( col -> {
+            this.tableFileds.forEach(col -> {
                 if ("id".equals(col.getField())) {
                     sb.append("\t\tnew Column(\"" + col.getField() + "\", \"" + col.getField() + "\"),\n");
                     return;
@@ -791,26 +935,28 @@ public class FastJavaMapTools {
 
         /**
          * 生成文件io
-         * @param conent 文件里的代码内容
+         *
+         * @param conent  文件里的代码内容
          * @param subPath 各层对应的中间目录
-         * @param suffix 各层对应的文件后缀
+         * @param suffix  各层对应的文件后缀
          */
         private void genFile(String conent, String subPath, String suffix) {
             System.out.println(suffix + "  =========================== >>>>> " + conent.toString());
             try {
                 File fileDirect = new File(this.basePath + File.separator + this.packagePath.replace(".", File.separator) + subPath);
                 fileDirect.mkdirs();
-                File file = new File(this.basePath + File.separator + this.packagePath.replace(".", File.separator) + subPath + File.separator  + className + suffix);
+                File file = new File(this.basePath + File.separator + this.packagePath.replace(".", File.separator) + subPath + File.separator + className + suffix);
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(conent.getBytes());
                 fos.close();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         /**
          * 生成POJO对象
+         *
          * @deprecated
          */
         public void genPojoObj(String tableName, List<CodeGenService.TableDesc> list) {
@@ -834,7 +980,7 @@ public class FastJavaMapTools {
             sb.append("private static final long serialVersionUID = 1L;");
             sb.append("\n");
 
-            for(int i=0; i<list.size(); i++) {
+            for (int i = 0; i < list.size(); i++) {
                 sb.append("\t");
                 sb.append("private " + typeContvert(list.get(i).getType()) + " " + nameCovert(list.get(i).getField(), false) + ";");
                 sb.append("\n");
@@ -846,11 +992,12 @@ public class FastJavaMapTools {
             sb.append("\n");
             sb.append("\n");
 
-            for(int i=0; i<list.size(); i++) {
+            for (int i = 0; i < list.size(); i++) {
                 sb.append("\t");
                 sb.append("public " + typeContvert(list.get(i).getType()) + " get" + nameCovert(list.get(i).getField(), true) + "() {");
                 sb.append("\n");
-                sb.append("\t");sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
                 sb.append("return " + nameCovert(list.get(i).getField(), false) + ";");
                 sb.append("\n");
                 sb.append("\t");
@@ -860,7 +1007,8 @@ public class FastJavaMapTools {
                 sb.append("\t");
                 sb.append("public void set" + nameCovert(list.get(i).getField(), true) + "(" + typeContvert(list.get(i).getType()) + " " + nameCovert(list.get(i).getField(), false) + ") {");
                 sb.append("\n");
-                sb.append("\t");sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
                 sb.append("this. " + nameCovert(list.get(i).getField(), false) + " = " + nameCovert(list.get(i).getField(), false) + ";");
                 sb.append("\n");
                 sb.append("\t");
@@ -877,17 +1025,18 @@ public class FastJavaMapTools {
             try {
                 File fileDirect = new File(this.basePath + File.separator + packagePath.replace(".", File.separator));
                 fileDirect.mkdirs();
-                File file = new File(this.basePath + File.separator + packagePath.replace(".", File.separator) + File.separator  + className + ".java");
+                File file = new File(this.basePath + File.separator + packagePath.replace(".", File.separator) + File.separator + className + ".java");
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(sb.toString().getBytes());
                 fos.close();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         /**
          * 生成Dao接口
+         *
          * @deprecated
          */
         public void genDaoObj(String tableName) {
@@ -934,17 +1083,17 @@ public class FastJavaMapTools {
             sb.append("\n");
 
             sb.append("\t");
-            sb.append("public " + className + " get" +className+ "(Integer id);");
+            sb.append("public " + className + " get" + className + "(Integer id);");
             sb.append("\n");
             sb.append("\n");
 
             sb.append("\t");
-            sb.append("public List<" + className + "> list" +className+ "();");
+            sb.append("public List<" + className + "> list" + className + "();");
             sb.append("\n");
             sb.append("\n");
 
             sb.append("\t");
-            sb.append("public List<" + className + "> paging" +className+ "(" + className + " " + objectName + ");");
+            sb.append("public List<" + className + "> paging" + className + "(" + className + " " + objectName + ");");
             sb.append("\n");
             sb.append("\n");
 
@@ -962,17 +1111,18 @@ public class FastJavaMapTools {
             try {
                 File fileDirect = new File(this.basePath + File.separator + packagePath.replace(".", File.separator));
                 fileDirect.mkdirs();
-                File file = new File(this.basePath + File.separator + packagePath.replace(".", File.separator) + File.separator  + className + "Mapper.java");
+                File file = new File(this.basePath + File.separator + packagePath.replace(".", File.separator) + File.separator + className + "Mapper.java");
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(sb.toString().getBytes());
                 fos.close();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         /**
          * 生成Dao mybatis 映射文件
+         *
          * @param tableName
          * @deprecated
          */
@@ -994,14 +1144,16 @@ public class FastJavaMapTools {
             sb.append("\n");
 
             sb.append("\t");
-            sb.append("<resultMap id=\"" +objectName+ "ResultMap\" type=\"" +this.packagePath+ ".pojo" + "." +className+ "\">");
+            sb.append("<resultMap id=\"" + objectName + "ResultMap\" type=\"" + this.packagePath + ".pojo" + "." + className + "\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
-            sb.append("<id property=\"" +nameCovert(list.get(0).getField(), false)+ "\" column=\"" +list.get(0).getField()+ "\"/>");
-            for(int i=1; i<list.size(); i++) {
+            sb.append("\t");
+            sb.append("\t");
+            sb.append("<id property=\"" + nameCovert(list.get(0).getField(), false) + "\" column=\"" + list.get(0).getField() + "\"/>");
+            for (int i = 1; i < list.size(); i++) {
                 sb.append("\n");
-                sb.append("\t");sb.append("\t");
-                sb.append("<result property=\"" +nameCovert(list.get(i).getField(), false)+ "\" column=\"" +list.get(i).getField()+ "\"/>");
+                sb.append("\t");
+                sb.append("\t");
+                sb.append("<result property=\"" + nameCovert(list.get(i).getField(), false) + "\" column=\"" + list.get(i).getField() + "\"/>");
             }
             sb.append("\n");
             sb.append("\t");
@@ -1012,28 +1164,36 @@ public class FastJavaMapTools {
             sb.append("\t");
             sb.append("<insert id=\"insert" + className + "\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("insert into " + tableName + " (");
-            for(int i=1; i<list.size(); i++) {
+            for (int i = 1; i < list.size(); i++) {
                 sb.append("\n");
-                sb.append("\t");sb.append("\t");sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
                 sb.append(list.get(i).getField() + ",");
             }
-            sb.replace(0, sb.length(), sb.substring(0, sb.length()-1));
+            sb.replace(0, sb.length(), sb.substring(0, sb.length() - 1));
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append(")");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("values (");
-            for(int i=1; i<list.size(); i++) {
+            for (int i = 1; i < list.size(); i++) {
                 sb.append("\n");
-                sb.append("\t");sb.append("\t");sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
                 sb.append("#{" + nameCovert(list.get(i).getField(), false) + "},");
             }
-            sb.replace(0, sb.length(), sb.substring(0, sb.length()-1));
+            sb.replace(0, sb.length(), sb.substring(0, sb.length() - 1));
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append(")");
             //sb.append("insert into " + tableName + " values (); ");
             sb.append("\n");
@@ -1046,25 +1206,34 @@ public class FastJavaMapTools {
             sb.append("\t");
             sb.append("<update id=\"update" + className + "\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("update ");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append(tableName);
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("set");
-            for(int i=1; i<list.size(); i++) {
+            for (int i = 1; i < list.size(); i++) {
                 sb.append("\n");
-                sb.append("\t");sb.append("\t");sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
+                sb.append("\t");
                 sb.append(list.get(i).getField() + " = #{" + nameCovert(list.get(i).getField(), false) + "},");
             }
-            sb.replace(0, sb.length(), sb.substring(0, sb.length()-1));
+            sb.replace(0, sb.length(), sb.substring(0, sb.length() - 1));
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("where");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("id = #{id}");
             //sb.append("update " + tableName + " set xx=yy where id = #{id}");
             sb.append("\n");
@@ -1076,7 +1245,8 @@ public class FastJavaMapTools {
             sb.append("\t");
             sb.append("<delete id=\"remove" + className + "\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("delete from " + tableName + " where id = #{id} ");
             sb.append("\n");
             sb.append("\t");
@@ -1085,9 +1255,10 @@ public class FastJavaMapTools {
             sb.append("\n");
 
             sb.append("\t");
-            sb.append("<select id=\"get" + className + "\" resultMap=\"" +objectName+ "ResultMap\">");
+            sb.append("<select id=\"get" + className + "\" resultMap=\"" + objectName + "ResultMap\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("select * from " + tableName + " where id = #{id}");
             sb.append("\n");
             sb.append("\t");
@@ -1096,9 +1267,10 @@ public class FastJavaMapTools {
             sb.append("\n");
 
             sb.append("\t");
-            sb.append("<select id=\"list" + className + "\" resultMap=\"" +objectName+ "ResultMap\">");
+            sb.append("<select id=\"list" + className + "\" resultMap=\"" + objectName + "ResultMap\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("select * from " + tableName + "");
             sb.append("\n");
             sb.append("\t");
@@ -1107,9 +1279,10 @@ public class FastJavaMapTools {
             sb.append("\n");
 
             sb.append("\t");
-            sb.append("<select id=\"paging" + className + "\" resultMap=\"" +objectName+ "ResultMap\">");
+            sb.append("<select id=\"paging" + className + "\" resultMap=\"" + objectName + "ResultMap\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("select * from " + tableName + " limit #{offset}, #{number}");
             sb.append("\n");
             sb.append("\t");
@@ -1120,7 +1293,8 @@ public class FastJavaMapTools {
             sb.append("\t");
             sb.append("<select id=\"list" + className + "Count\" resultType=\"int\">");
             sb.append("\n");
-            sb.append("\t");sb.append("\t");
+            sb.append("\t");
+            sb.append("\t");
             sb.append("select count(1) from " + tableName + "");
             sb.append("\n");
             sb.append("\t");
@@ -1134,11 +1308,11 @@ public class FastJavaMapTools {
             try {
                 File fileDirect = new File(this.basePath + File.separator + packagePath.replace(".", File.separator));
                 fileDirect.mkdirs();
-                File file = new File(this.basePath + File.separator + packagePath.replace(".", File.separator) + File.separator  +className + "Mapper.xml");
+                File file = new File(this.basePath + File.separator + packagePath.replace(".", File.separator) + File.separator + className + "Mapper.xml");
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(sb.toString().getBytes());
                 fos.close();
-            } catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -1152,6 +1326,7 @@ public class FastJavaMapTools {
             List<String> list = service.showTables(sql);
             return list;
         }
+
         /**
          * 转成领域名，类名的简称, 多用于url, api编写
          */
@@ -1159,12 +1334,14 @@ public class FastJavaMapTools {
             String[] classNamePath = name.split("_");
             return classNamePath[classNamePath.length - 1].toLowerCase();
         }
+
         /**
          * 类或字段名转换 (按照map 数据库风格)
          */
         private String nameCovert(String name, boolean firstUpper) {
             return name.trim().toLowerCase();
         }
+
         /**
          * 类或字段名转换 (按照java 陀峰风格)
          */
@@ -1172,18 +1349,18 @@ public class FastJavaMapTools {
             String[] classNamePath = name.split("_");
             StringBuffer className = new StringBuffer();
             int firstLetter = 0;
-            for(int i = 0; i < classNamePath.length; i++) {
+            for (int i = 0; i < classNamePath.length; i++) {
                 firstLetter = Integer.valueOf(classNamePath[i].charAt(0));
-                if(firstLetter >= 97 && firstLetter <= 122) {
+                if (firstLetter >= 97 && firstLetter <= 122) {
                     char c;
-                    if(i==0) {
-                        if(firstUpper) {
-                            c = (char) (firstLetter-32);
+                    if (i == 0) {
+                        if (firstUpper) {
+                            c = (char) (firstLetter - 32);
                         } else {
                             c = (char) firstLetter;
                         }
                     } else {
-                        c = (char) (firstLetter-32);
+                        c = (char) (firstLetter - 32);
                     }
                     className.append(String.valueOf(c) + classNamePath[i].substring(1));
                 } else {
@@ -1192,23 +1369,25 @@ public class FastJavaMapTools {
             }
             return className.toString();
         }
+
         /**
          * 类型转换
+         *
          * @param type
          * @return
          */
         private String typeContvert(String type) {
-            if(type.startsWith("int") || type.startsWith("tinyint") || type.startsWith("smallint") || type.startsWith("bit") || type.startsWith("mediumint")) {
+            if (type.startsWith("int") || type.startsWith("tinyint") || type.startsWith("smallint") || type.startsWith("bit") || type.startsWith("mediumint")) {
                 return "Integer";
-            } else if(type.startsWith("bigint")) {
+            } else if (type.startsWith("bigint")) {
                 return "Long";
-            } else if(type.startsWith("float")) {
+            } else if (type.startsWith("float")) {
                 return "Float";
-            } else if(type.startsWith("double")) {
+            } else if (type.startsWith("double")) {
                 return "Double";
-            } else if(type.startsWith("char") || type.startsWith("varchar") || type.startsWith("text")) {
+            } else if (type.startsWith("char") || type.startsWith("varchar") || type.startsWith("text")) {
                 return "String";
-            } else if(type.startsWith("datetime") || type.startsWith("timestamp")) {
+            } else if (type.startsWith("datetime") || type.startsWith("timestamp")) {
                 return "Timestamp";
             }
             return type;
@@ -1227,8 +1406,11 @@ public class FastJavaMapTools {
                 }
             }
 //            basePath = basePath.substring(0, basePath.indexOf("uniutil")+7);
-            basePath = basePath + File.separator +  "target" + File.separator + "autoGen";
+//            basePath = basePath + File.separator +  "target" + File.separator + "autoGen";
+            //修改生成文件路径 ex_panggn3
+            basePath = basePath.replace("target/classes/", "src/main/java/");
             System.out.println("Output : " + basePath);
+
             File file = new File(basePath);
             file.mkdirs();
             return basePath;
@@ -1250,6 +1432,7 @@ public class FastJavaMapTools {
     public static class CodeGenService {
 
         private static JdbcTemplate jdbcTemplate;
+
         static {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName(JDBCCLASS);
@@ -1275,7 +1458,7 @@ public class FastJavaMapTools {
             List<Map<String, Object>> resultList = this.jdbcTemplate.queryForList(sql);
             List<String> list = new ArrayList<String>();
             Map<String, Object> map = new HashMap<String, Object>();
-            for(int i = 0; i < resultList.size(); i++) {
+            for (int i = 0; i < resultList.size(); i++) {
                 map = resultList.get(i);
                 Set<String> keys = map.keySet();
                 String key = keys.iterator().next();
@@ -1288,12 +1471,12 @@ public class FastJavaMapTools {
          * 列出表的字段描述
          */
         public List<TableDesc> descTable(String tableName) {
-            //id    int(11) NO  PRI NULL    auto_increment
+            //id	int(11)	NO	PRI	NULL	auto_increment
             List<Map<String, Object>> resultList = this.jdbcTemplate.queryForList("show full columns from `" + tableName + "`");
             Map<String, Object> map = new HashMap<String, Object>();
             TableDesc table;
             List<TableDesc> list = new ArrayList<CodeGenService.TableDesc>();
-            for(int i = 0; i < resultList.size(); i++) {
+            for (int i = 0; i < resultList.size(); i++) {
                 map = resultList.get(i);
                 table = new TableDesc(map.get("Field").toString(), map.get("Type").toString(), map.get("Null").toString(), map.get("Key").toString(), String.valueOf(map.get("Default")), String.valueOf(map.get("Comment")));//map.get("Key").toString(), map.get("Default").toString(), map.get("Extra").toString());
                 list.add(table);
@@ -1322,7 +1505,8 @@ public class FastJavaMapTools {
             private String defaultValue;
             private String extra;
 
-            public TableDesc() {}
+            public TableDesc() {
+            }
 
             public TableDesc(String field, String type, String allowNull, String key, String defaultValue, String extra) {
                 this.field = field;
@@ -1336,36 +1520,47 @@ public class FastJavaMapTools {
             public String getField() {
                 return field;
             }
+
             public void setField(String field) {
                 this.field = field;
             }
+
             public String getType() {
                 return type;
             }
+
             public void setType(String type) {
                 this.type = type;
             }
+
             public String getAllowNull() {
                 return allowNull;
             }
+
             public void setAllowNull(String allowNull) {
                 this.allowNull = allowNull;
             }
+
             public String getKey() {
                 return key;
             }
+
             public void setKey(String key) {
                 this.key = key;
             }
+
             public String getDefaultValue() {
                 return defaultValue;
             }
+
             public void setDefaultValue(String defaultValue) {
                 this.defaultValue = defaultValue;
             }
+
             public String getExtra() {
                 return extra;
             }
+
             public void setExtra(String extra) {
                 this.extra = extra;
             }
