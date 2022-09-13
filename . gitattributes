@@ -1,4 +1,0 @@
-*.yaml linguist-language=Java
-*.xml linguist-language=Java
-*.jar linguist-language=TypeScript
-*.md linguist-language=Nodejs
