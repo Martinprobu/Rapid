@@ -1,7 +1,7 @@
 /**
  * <pre>
  * Generate simplified layer code, interact with map, remove POJO and retain a small amount of Dao
- * (Support Java, Nodejs/Mysql, PostgreSql)
+ * (Support Java, TypeScript/Mysql, PostgreSql)
  *
  * 生成精简的层代码，batis层以Map交互，铲掉pojo，保留少量dto
  * 目前仅支持MySql
