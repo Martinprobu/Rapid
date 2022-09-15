@@ -1,131 +1,71 @@
-/**
- * <pre>
- * Generate simplified layer code, interact with map, remove POJO and retain a small amount of Dao
- * (Support Java, TypeScript/Mysql, PostgreSql)
- *
- * 生成精简的层代码，batis层以Map交互，铲掉pojo，保留少量dto
- * 目前仅支持MySql
- *
- * 基本配置:
- * PACKAGEPATH = "com.xx.yy";                       //基本的包名路径
- * SERVERPATH = "http://127.0.0.1:8080/api";        //接口服务器路径, 填充api接口的文档
- * JDBCPATH = "jdbc:mysql://127.0.0.1:3306/db_dev"; //jdbc
- * JDBCUSERNAME = "root";                           //jdbc
- * JDBCPSWORD = "123456";                           //jdbc
- * JDBCCLASS = "com.mysql.jdbc.Driver";             //jdbc
- * JDBCPORT = "3306";                               //jdbc
- * AUTHOR = "Bill";                                 //作者
- * VERSION = "1.0";                                 //版本
- *
- * 生成以下层:
- * com.xxx.yyy.web.controller.OrderController
- * com.xxx.yyy.service.impl.OrderService
- * com.xxx.yyy.dao.mapper.custom.OrderMapper
- * com.xxx.yyy.commons.consts.TableColumns  <可忽略>
- *
- * 依赖(也可忽略):
- * com.xxx.yyy.commons.models.dto.table.ChildrenColumn
- * com.xxx.yyy.commons.models.dto.table.Column
- * com.xxx.yyy.commons.models.dto.PageInfo<T>
- * com.xxx.yyy.commons.models.dto.ResponseData
- * com.xxx.yyy.commons.utils.MapUtils
- * com.xxx.yyy.commons.enums.ReturnCode
- * com.xxx.yyy.commons.consts.TableColumns
- * 以及PageHelper插件
- *
- *
- * <<会生成于当前目录下，生成后开发者需要手工copy需要的文件于对应的目录下面。>>
- *
- * 依懒以下pom
- * <dependency>
- * 		<groupId>mysql</groupId>
- * 		<artifactId>mysql-connector-java</artifactId>
- * 		<version>5.1.18</version>
- * </dependency>
- * <dependency>
- *      <groupId>org.springframework</groupId>
- *      <artifactId>spring-jdbc</artifactId>
- *      <version>5.1.5.RELEASE</version>
- * </dependency>
- *
- *
- * 下个版本TODO:
- *  生成Vue前端代码
- *  支持Oracle
- *
- *
- *
- *   添加swagger_doc支持
- *
- *   1.依懒以下pom, 本地jar
- *   <!-- SwaggerDoc 依赖-->
- *      <dependency>
- *          <groupId>com.gitee.largerfish</groupId>
- *          <artifactId>swagger-doc-starter</artifactId>
- *          <version>1.4-SNAPSHOT</version>
- *          <scope>system</scope>
- *          <systemPath>${project.basedir}/libs/swagger-doc-starter.jar</systemPath>
- *          <!--去除不必要的日志依赖,解决日志冲突-->
- *          <exclusions>
- *              <exclusion>
- *                  <groupId>org.slf4j</groupId>
- *                  <artifactId>slf4j-log4j12</artifactId>
- *              </exclusion>
- *              <exclusion>
- *                  <groupId>log4j</groupId>
- *                  <artifactId>log4j</artifactId>
- *              </exclusion>
- *          </exclusions>
- *      </dependency>
- *
- *   2.添加swagger_doc配置，则就会自动通过javadoc生成对应的swaggerdoc
- *
- *  @Configuration
- *@EnableSwaggerDoc
- *public class SwaggerDocConfig {
- *
- *  @Bean
- *  public FilterRegistrationBean logFilterRegistrationBean() {
- *      FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
- *      filterRegistrationBean.setFilter(new FilterInterceptor());
- *      filterRegistrationBean.setName("logFilterRegistrationBean");
- *      filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
- *      filterRegistrationBean.setOrder(1);
- *      return filterRegistrationBean;
- *  }
- *
- *  @Bean
- *  public SwaggerDoc swaggerDoc() {
- *      Contact contact = new Contact();
- *      Info info = new Info();
- *      info.setTitle("供应商管理客户端接口文档");
- *      contact.setEmail("linwl5@gdii-yueyun.com");
- *      contact.setName("linwl");
- *      contact.setUrl("");
- *      info.setDescription("供应商管理客户端接口");
- *      info.setContact(contact);
- *      return new SwaggerDoc.SwaggerDocBuilder().addSkipAnnotations(SessionAttribute.class).withDoc("doc")
- *               .withDoc("供应商管理客户端接口文档").withInfo(info).withHost("127.0.0.1:8091/dc").addIgnoreControllers("swaggerController", "basicErrorController").build();
- *  }
- * }
- *
- *
- *
- * 3.ymal配置：
- *  swagger:
- *  doc:
- *  visitPath: /swagger.json
- *  useWar: false
- *  sourceDir: ${project.basedir}
- *spring:
- *mvc:
- *  static-path-pattern: /static/**
- *  resources:
- *    static-locations: classpath:/META-INF/resources/, classpath:/resources/,classpath:/static/ 
- *
- * </pre>
- *
- * @author Bill
- * @since 2020-05-05
- * @version 1.0
- */
+# Rapid
+
+## Very easy automatic code generation
+#### 非常容易地自动生成代码
+#### 非常に簡単な自動コード生成
+
+## See the video link below
+#### 请看以下视频链接
+#### 以下のビデオリンクをご覧ください。
+
+> https://www.bilibili.com/video/BV1XT411M7rZ/?vd_source=5540375a2c7c12747e7298f4e6f5ddad
+
+## Refer to the java demo for usage. It is very simple and fast
+#### 用法请参考java的demo，非常简单快速
+#### javaのデモを参考に、非常に簡単な使い方をしてください
+
+## Not limited to any programming language, All can be used with confidence, home must choose
+#### 不局限于任何编程语言, 都能用得放心，居家必选
+#### プログラミング言語に限定されない, ご家庭の必需品
+
+## Welcome interested friends to contribute excellent templates
+#### 欢迎有兴趣的朋友仔贡献优秀的模板
+#### ご興味のある方からの優れたテンプレートのご投稿をお待ちしております
+
+## Template API (Optional)
+
+#### Configuration files
+#### 配置文件
+#### コンフィギュレーションファイル
+>> template.yml will override application.yml for the same properties
+```
+src/main/resources/application.yml
+src/main/resources/template/template.yml
+```
+
+
+#### The default template parameters are the following
+#### 默认模板参数有以下
+#### デフォルトのテンプレートパラメーターは以下の通りです
+```
+tableComment    # Comments on the table
+tableFileds     # A list of fields of the table
+className       # The name of the class generated by this table
+objectName      # The name of the instant generated by this class
+domainName      # your package domain
+tableName       # database table
+packagePath   # Your package's base directory
+author          # author 
+version         # version
+```
+##### Using iterations like this
+##### 这样使用迭代
+##### このようにイテレーションを使うことで
+```
+[# th:each="field : ${tableFileds}"]
+/** [(${field.extra})]  */
+@Field("[(${field.key})]")
+private [(${field.type})] [(${field.field})];
+
+[/]
+```
+##### Mock Table Demo For Mysql
+```
+CREATE DATABASE rapid_dev;
+CREATE TABLE rapid_dev.`order` (
+	id int auto_increment primary key,
+	name varchar(40) not null 
+)
+ENGINE=InnoDB
+COMMENT='order comment';
+```

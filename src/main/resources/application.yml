@@ -1,0 +1,12 @@
+domain:
+  package_path: com.rapid.admin
+  server_path: http://127.0.0.1:8091/dc
+  jdbc_path: jdbc:mysql://127.0.0.1:3306/rapid_dev
+  # jdbc:postgresql://127.0.0.1:5432/db_01
+  jdbc_username: root
+  jdbc_psword: "123456"
+  jdbc_class: com.mysql.jdbc.Driver
+  # org.postgresql.Driver
+  jdbc_port: "3306"
+  author: Martinprobu
+  version: "1.0"

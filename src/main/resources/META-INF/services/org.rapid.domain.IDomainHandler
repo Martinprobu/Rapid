@@ -1,0 +1,6 @@
+org.rapid.domain.template.TemplateDomainDefaultHandler
+org.rapid.domain.java.JavaDomainFastMapHandler
+org.rapid.domain.typescript.TypescriptDomainDefaultHandler
+org.rapid.domain.kuduhive.KudoHiveDomainDefaultHandler
+org.rapid.domain.react.ReactDomainDefaultHandler
+org.rapid.domain.vue.VueDomainDefaultHandler

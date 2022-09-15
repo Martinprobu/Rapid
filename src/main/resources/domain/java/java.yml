@@ -1,0 +1,14 @@
+domain:
+  packagepath: com.ecms.admin
+
+java:
+  controller_package: /web/controller
+  controller_suffix: Controller.java
+  service_package: /service/impl
+  service_suffix: ServiceImpl.java
+  mapper_package: /dao/mapper
+  mapper_suffix: Mapper.java
+  columns_package: /model/tables
+  columns_suffix: TableColumns.java
+  http_mock_package: /http_mock/
+  http_mock_suffix: .http
