@@ -13,7 +13,7 @@ public class V1Service implements IExecService {
 
     Logger log = Logger.getGlobal();
 //    @Override
-    public void handle(DomainType type) throws IOException {
+    public void handle(DomainType type, String tableArr) throws IOException {
 
         log.info("V1Service service");
 
@@ -23,7 +23,7 @@ public class V1Service implements IExecService {
         while (iterator.hasNext()) {
             IDomainHandler handler =  iterator.next();
             if (handler.getName().equals(type.getName())) {
-                handler.doHandler();
+                handler.doHandler(tableArr);
             }
         }
 

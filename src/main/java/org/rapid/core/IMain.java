@@ -14,11 +14,11 @@ public interface IMain {
     /**
      * run the all domain
      */
-    public void exec();
+    public void exec(String tableArr);
 
     /**
      * run the specical domain, like typescripe, java, react ...
      */
-    public void exec(DomainType type) throws IOException;
+    public void exec(DomainType type, String tableArr) throws IOException;
 
 }

@@ -14,7 +14,7 @@ public class KudoHiveDomainDefaultHandler implements IDomainHandler {
     }
 
     @Override
-    public void doHandler() {
+    public void doHandler(String tableArr) {
         log.info("KudoHive doHandler");
     }
 }

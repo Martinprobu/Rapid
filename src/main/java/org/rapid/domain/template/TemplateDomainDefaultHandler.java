@@ -17,13 +17,19 @@ public class TemplateDomainDefaultHandler implements IDomainHandler {
     }
 
     @Override
-    public void doHandler() throws IOException {
+    public void doHandler(String tableArr) throws IOException {
         log.info("Template doHandler");
+        if (tableArr.isEmpty()) {
+            return;
+        }
 
         CodeGen code = new CodeGen();
         List<String> list = code.readTables();
         list.clear();
-        list.add("order");
+        String[] tableStrArr = tableArr.split(",");
+        for (String table : tableStrArr) {
+            list.add(table);
+        }
         System.out.println("Please choose which table need to gen the code, number or table_name is allowable.");
 
         // iterator the template files

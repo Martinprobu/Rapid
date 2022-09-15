@@ -14,7 +14,7 @@ public class TypescriptDomainDefaultHandler implements IDomainHandler {
     }
 
     @Override
-    public void doHandler() {
+    public void doHandler(String tableArr) {
         log.info("Typescript doHandler");
     }
 }

@@ -14,7 +14,7 @@ public class VueDomainDefaultHandler implements IDomainHandler {
     }
 
     @Override
-    public void doHandler() {
+    public void doHandler(String tableArr) {
         log.info("Vue doHandler");
     }
 }

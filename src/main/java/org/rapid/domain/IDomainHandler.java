@@ -6,6 +6,6 @@ public interface IDomainHandler {
 
     public String getName();
 
-    public void doHandler() throws IOException;
+    public void doHandler(String tableArr) throws IOException;
 
 }

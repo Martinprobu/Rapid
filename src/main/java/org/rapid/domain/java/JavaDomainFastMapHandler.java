@@ -17,7 +17,7 @@ public class JavaDomainFastMapHandler implements IDomainHandler {
     }
 
     @Override
-    public void doHandler() {
+    public void doHandler(String tableArr) {
         log.info("Java FastMap doHandler");
 
         CodeGen code = new CodeGen();

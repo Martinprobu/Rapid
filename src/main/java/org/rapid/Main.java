@@ -27,10 +27,10 @@ public class Main implements IMain {
     private IExecService execService;
 
     @Override
-    public void exec() {
+    public void exec(String tableArr) {
         Arrays.stream(DomainType.values()).forEach((type) -> {
             try {
-                exec(type);
+                exec(type, tableArr);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -38,8 +38,8 @@ public class Main implements IMain {
     }
 
     @Override
-    public void exec(DomainType type) throws IOException {
-        execService.handle(type);
+    public void exec(DomainType type, String tableArr) throws IOException {
+        execService.handle(type, tableArr);
     }
 
     @SuppressWarnings("resource")
@@ -50,13 +50,15 @@ public class Main implements IMain {
         log.info(service.toString());
 
         // run the java domain @Deprecated
-//        new Main(service).exec(DomainType.JAVA);
+//        new Main(service).exec(DomainType.JAVA, tableArr);
 
         // template  @TemplateDomainDefaultHandler
-        new Main(service).exec(DomainType.TEMPLATE);
+        // Please separate tables with a comma since more than one
+        String tableArr = "order";
+        new Main(service).exec(DomainType.TEMPLATE, tableArr);
 
 //        run all domains, rarely used
-//        new Main(service).exec();
+//        new Main(service).exec(tableArr);
 
     }
 }
