@@ -1,4 +1,4 @@
-package org.rapid.domain.typescript;
+package org.rapid.domain.Koltin;
 
 import org.rapid.common.enums.JdbcType;
 import org.rapid.common.model.TableDesc;
@@ -7,47 +7,47 @@ import org.rapid.domain.AbstractTableConverHandler;
 
 import java.util.Map;
 
-public class TypescriptTableConverHandler extends AbstractTableConverHandler {
+public class KoltinTableConverHandler extends AbstractTableConverHandler {
 
     public TableDesc doHandler(Map<String, Object> map)  {
         String type = map.get("Type").toString().substring(0, map.get("Type").toString().indexOf("("));
         JdbcType jType = JdbcType.getType(type);
         switch (jType) {
             case BIGINT:
-                type = "number";
+                type = "Long";
                 break;
             case DOUBLE:
-                type = "number";
+                type = "Double";
                 break;
             case FLOAT:
-                type = "number";
+                type = "Float";
                 break;
             case INT:
-                type = "number";
+                type = "Int";
                 break;
             case TINYINT:
-                type = "number";
+                type = "Short";
                 break;
             case VARCHAR:
-                type = "string";
+                type = "Char";
                 break;
             case CHAR:
-                type = "string";
+                type = "Char";
                 break;
             case DECIMAL:
-                type = "number";
+                type = "Char";
                 break;
             case DATE:
-                type = "Date";
+                type = "LocalDate";
                 break;
             case DATETIME:
-                type = "Date";
+                type = "LocalDateTime";
                 break;
             case TIMESTAMP:
-                type = "number";
+                type = "Timestamp";
                 break;
             default:
-                type = "String";
+                type = "char";
         }
 
         return new TableDesc(

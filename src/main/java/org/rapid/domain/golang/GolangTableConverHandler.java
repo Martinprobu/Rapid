@@ -1,4 +1,4 @@
-package org.rapid.domain.typescript;
+package org.rapid.domain.golang;
 
 import org.rapid.common.enums.JdbcType;
 import org.rapid.common.model.TableDesc;
@@ -7,26 +7,26 @@ import org.rapid.domain.AbstractTableConverHandler;
 
 import java.util.Map;
 
-public class TypescriptTableConverHandler extends AbstractTableConverHandler {
+public class GolangTableConverHandler extends AbstractTableConverHandler {
 
     public TableDesc doHandler(Map<String, Object> map)  {
         String type = map.get("Type").toString().substring(0, map.get("Type").toString().indexOf("("));
         JdbcType jType = JdbcType.getType(type);
         switch (jType) {
             case BIGINT:
-                type = "number";
+                type = "int64";
                 break;
             case DOUBLE:
-                type = "number";
+                type = "float64";
                 break;
             case FLOAT:
-                type = "number";
+                type = "float32";
                 break;
             case INT:
-                type = "number";
+                type = "int32";
                 break;
             case TINYINT:
-                type = "number";
+                type = "int8";
                 break;
             case VARCHAR:
                 type = "string";
@@ -35,19 +35,19 @@ public class TypescriptTableConverHandler extends AbstractTableConverHandler {
                 type = "string";
                 break;
             case DECIMAL:
-                type = "number";
+                type = "string";
                 break;
             case DATE:
-                type = "Date";
+                type = "Time";
                 break;
             case DATETIME:
-                type = "Date";
+                type = "Time";
                 break;
             case TIMESTAMP:
-                type = "number";
+                type = "Time";
                 break;
             default:
-                type = "String";
+                type = "string";
         }
 
         return new TableDesc(

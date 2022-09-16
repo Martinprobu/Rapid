@@ -24,6 +24,19 @@ public class JavaTableConverHandler extends AbstractTableConverHandler {
         if (type.equals("varchar") || type.equals("char")) {
             type = "String";
         }
+        if (type.equals("date")) {
+            type = "LocalDate";
+        }
+        if (type.equals("datetime")) {
+            type = "LocalDateTime";
+        }
+        if (type.equals("timestamp")) {
+            type = "Timestamp";
+        }
+        if (type.equals("decimal")) {
+            type = "Decimal";
+        }
+
         return new TableDesc(
                 GrammarUtil.nameCovert_(map.get("Field").toString(), false),
                 type,

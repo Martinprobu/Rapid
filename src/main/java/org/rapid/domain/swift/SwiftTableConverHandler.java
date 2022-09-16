@@ -1,4 +1,4 @@
-package org.rapid.domain.typescript;
+package org.rapid.domain.swift;
 
 import org.rapid.common.enums.JdbcType;
 import org.rapid.common.model.TableDesc;
@@ -7,44 +7,44 @@ import org.rapid.domain.AbstractTableConverHandler;
 
 import java.util.Map;
 
-public class TypescriptTableConverHandler extends AbstractTableConverHandler {
+public class SwiftTableConverHandler extends AbstractTableConverHandler {
 
     public TableDesc doHandler(Map<String, Object> map)  {
         String type = map.get("Type").toString().substring(0, map.get("Type").toString().indexOf("("));
         JdbcType jType = JdbcType.getType(type);
         switch (jType) {
             case BIGINT:
-                type = "number";
+                type = "long";
                 break;
             case DOUBLE:
-                type = "number";
+                type = "Double";
                 break;
             case FLOAT:
-                type = "number";
+                type = "Float";
                 break;
             case INT:
-                type = "number";
+                type = "Int";
                 break;
             case TINYINT:
-                type = "number";
+                type = "Int";
                 break;
             case VARCHAR:
-                type = "string";
+                type = "String";
                 break;
             case CHAR:
-                type = "string";
+                type = "String";
                 break;
             case DECIMAL:
-                type = "number";
+                type = "String";
                 break;
             case DATE:
-                type = "Date";
+                type = "NSDate";
                 break;
             case DATETIME:
-                type = "Date";
+                type = "NSDate";
                 break;
             case TIMESTAMP:
-                type = "number";
+                type = "TimeStamp";
                 break;
             default:
                 type = "String";

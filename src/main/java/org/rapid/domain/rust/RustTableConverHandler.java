@@ -1,4 +1,4 @@
-package org.rapid.domain.typescript;
+package org.rapid.domain.rust;
 
 import org.rapid.common.enums.JdbcType;
 import org.rapid.common.model.TableDesc;
@@ -7,47 +7,47 @@ import org.rapid.domain.AbstractTableConverHandler;
 
 import java.util.Map;
 
-public class TypescriptTableConverHandler extends AbstractTableConverHandler {
+public class RustTableConverHandler extends AbstractTableConverHandler {
 
     public TableDesc doHandler(Map<String, Object> map)  {
         String type = map.get("Type").toString().substring(0, map.get("Type").toString().indexOf("("));
         JdbcType jType = JdbcType.getType(type);
         switch (jType) {
             case BIGINT:
-                type = "number";
+                type = "Integer";
                 break;
             case DOUBLE:
-                type = "number";
+                type = "Integer";
                 break;
             case FLOAT:
-                type = "number";
+                type = "Float";
                 break;
             case INT:
-                type = "number";
+                type = "Integer";
                 break;
             case TINYINT:
-                type = "number";
+                type = "Integer";
                 break;
             case VARCHAR:
-                type = "string";
+                type = "char";
                 break;
             case CHAR:
-                type = "string";
+                type = "char";
                 break;
             case DECIMAL:
-                type = "number";
+                type = "char";
                 break;
             case DATE:
                 type = "Date";
                 break;
             case DATETIME:
-                type = "Date";
+                type = "DateTime";
                 break;
             case TIMESTAMP:
-                type = "number";
+                type = "Time";
                 break;
             default:
-                type = "String";
+                type = "char";
         }
 
         return new TableDesc(

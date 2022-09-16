@@ -1,4 +1,4 @@
-package org.rapid.domain.typescript;
+package org.rapid.domain.c;
 
 import org.rapid.common.enums.JdbcType;
 import org.rapid.common.model.TableDesc;
@@ -7,35 +7,35 @@ import org.rapid.domain.AbstractTableConverHandler;
 
 import java.util.Map;
 
-public class TypescriptTableConverHandler extends AbstractTableConverHandler {
+public class CTableConverHandler extends AbstractTableConverHandler {
 
     public TableDesc doHandler(Map<String, Object> map)  {
         String type = map.get("Type").toString().substring(0, map.get("Type").toString().indexOf("("));
         JdbcType jType = JdbcType.getType(type);
         switch (jType) {
             case BIGINT:
-                type = "number";
+                type = "long";
                 break;
             case DOUBLE:
-                type = "number";
+                type = "double";
                 break;
             case FLOAT:
-                type = "number";
+                type = "float";
                 break;
             case INT:
-                type = "number";
+                type = "int";
                 break;
             case TINYINT:
-                type = "number";
+                type = "short";
                 break;
             case VARCHAR:
-                type = "string";
+                type = "char";
                 break;
             case CHAR:
-                type = "string";
+                type = "char";
                 break;
             case DECIMAL:
-                type = "number";
+                type = "char";
                 break;
             case DATE:
                 type = "Date";
@@ -44,10 +44,10 @@ public class TypescriptTableConverHandler extends AbstractTableConverHandler {
                 type = "Date";
                 break;
             case TIMESTAMP:
-                type = "number";
+                type = "long";
                 break;
             default:
-                type = "String";
+                type = "char";
         }
 
         return new TableDesc(

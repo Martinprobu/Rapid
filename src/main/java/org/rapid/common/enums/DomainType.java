@@ -4,8 +4,20 @@ public enum DomainType {
     TEMPLATE("template"),
     JAVA("java"),
     TYPESCRIPT("ts"),
+    JAVASCRIPT("js"),
+    NODEJS("ts"),
     KUDUHIVE("sql"),
     REACT("tsx"),
+    RUBY("rb"),
+    C("c"),
+    CPP("cpp"),
+    SWIFT("swift"),
+    RUST("rs"),
+    GOLAND("go"),
+    PHP("php"),
+    SCALA("scala"),
+    OBJECTC("m"),
+    KOLTIN("kt"),
     VUE("vue");
 
     private String name;
