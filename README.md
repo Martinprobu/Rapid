@@ -67,5 +67,8 @@ CREATE TABLE rapid_dev.`order` (
 	name varchar(40) not null 
 )
 ENGINE=InnoDB
-COMMENT='order comment';
+COMMENT='order comment ';
+
 ```
+
+
